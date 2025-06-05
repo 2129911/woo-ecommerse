@@ -183,7 +183,7 @@ query GetCart {
 // }
 
 export async function getData(payload: { query: string }) {
-  const response = await fetch("https://your-vercel-app-name.vercel.app/api/graphql", {
+  const response = await fetch("https://woo-ecommerse.vercel.app/api/graphql", {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
