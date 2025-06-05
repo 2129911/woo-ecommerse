@@ -174,9 +174,9 @@ export async function getData(payload: { query: string }) {
     headers: {
       "Content-Type": "application/json",
     },
-mode:"cors",
-    body: JSON.stringify(payload),
-    credentials: 'include'
+// mode:"cors",
+    body: JSON.stringify({payload}),
+    // credentials: 'include'
   });
 
   return await response.json();

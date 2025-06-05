@@ -1,11 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getGraphQl, getData  } from "../api/graphQl/route";
-import { addToCart } from "../api/graphQl/route";
+import { getData  } from "../../lib/route";
+import { addToCart } from "../../lib/route";
+import { getGraphQl } from "../../lib/route";
+import Image from "next/image";
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  slug: string;
+  image?: {
+    sourceUrl: string;
+    altText?: string;
+    title?: string;
+  };
+};
+
 // import { cartItem } from "../api/graphQl/route";
 
 export default function HomePage() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Product[]>([]);
 
   const loadProducts = async () => {
     try {
@@ -23,10 +37,10 @@ export default function HomePage() {
   }, []);
  
 
-const addData = async (product: any) => {
-  const rawId = product?.databaseId || product?.id;
+const addData = async (product:Product) => {
+  const rawId =  product?.id
   const id = atob(rawId);
-  let postId = id.split(":")[1];
+  const postId = id.split(":")[1];
 
   const productId = postId;
   const quantity = 1;
@@ -56,9 +70,9 @@ const addData = async (product: any) => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {data.map((product: any) => (
+        {data.map((product: Product) => (
           <div key={product.id}  className="bg-white p-4 shadow rounded">
-            <img
+            <Image
               src={product.image?.sourceUrl}
               alt={product.image?.altText}
               className="w-full h-48 object-cover mb-2"
