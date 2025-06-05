@@ -176,7 +176,7 @@ export async function getData(payload: { query: string }) {
     },
 // mode:"cors",
     body: JSON.stringify({payload}),
-    // credentials: 'include'
+    credentials: 'include'
   });
 
   return await response.json();
