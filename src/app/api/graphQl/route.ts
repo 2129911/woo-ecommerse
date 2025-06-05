@@ -66,7 +66,7 @@ export function getGraphQl() {
 //   };
 // }
 
-export function addToCart(productId: any, quantity: any) {
+export function addToCart(productId: number, quantity: number) {
   return {
     query: `
      mutation {
