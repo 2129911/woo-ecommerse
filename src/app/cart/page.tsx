@@ -9,7 +9,7 @@ import { getCart, getData } from "../api/graphQl/route";
 
 export default function HomePage() {
   
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<[]>([]);
 
   const loadProducts = async () => {
     try {
