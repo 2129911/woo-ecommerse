@@ -166,7 +166,7 @@ query GetCart {
 //   return res.json();
 // };
 
-export async function getData(payload: { query: any }) {
+export async function getData(payload: { query: string }) {
 
   
   const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
