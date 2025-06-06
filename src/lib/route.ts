@@ -3,7 +3,7 @@ export function getGraphQl() {
   return {
     query: `
       query queryAllPost {
-        products{
+        products (first:100){
           nodes {
             id
             name
@@ -22,49 +22,6 @@ export function getGraphQl() {
 }
 
 
-// export function getDataCart(productId:any, quantity: any) {
-//   return {
-//     query: `
-//       mutation AddToCart {
-//         addToCart(input: {productId: ${productId}, quantity: ${quantity}}) {
-//           cart {
-//             contents {
-//               itemCount
-//               nodes {
-//                 key
-//                 quantity
-//                 total
-//               }
-//             }
-//             total
-//           }
-//         }
-//       }
-//     `
-//   };
-// }
-
-// export function getDataCart(productId: any, quantity: any) {
-//   return {
-//     query: `
-//       mutation AddToCart {
-//         addToCart(input: {productId: ${productId}, quantity: ${quantity}}) {
-//           cart {
-//             contents {
-//               itemCount
-//               nodes {
-//                 key
-//                 quantity
-//                 total
-//               }
-//             }
-//             total
-//           }
-//         }
-//       }
-//     `
-//   };
-// }
 
 export function addToCart(productId: string, quantity: number) {
   return {
@@ -84,6 +41,36 @@ export function addToCart(productId: string, quantity: number) {
     `
   };
 }
+export function deleteCartItem(key: string) {
+  return {
+    query: `
+      mutation DeleteCartItem {
+        removeItemsFromCart(input: {
+          keys: "${key}"
+        }) 
+          {
+          cart {
+            contents {
+              nodes {
+                key
+                quantity
+                product {
+                  node {
+                  image{
+                  sourceUrl
+                  }
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+  };
+}
+
 
 export function getCart() {
   return {
@@ -104,6 +91,7 @@ query GetCart {
             }
           }
         }
+           total
       }
     }
   }
@@ -112,113 +100,36 @@ query GetCart {
   };
 }
 
+export function quanitityUpdate(key: any, quantity: any) {
+  return {
+    query: `
+    mutation quantityUpdate {
+  updateProduct(input: {id: "", visibleProducts: {}}) {
+    clientMutationId
+  }
+  updateItemQuantities(input: {items: {key: "${key}", quantity: ${quantity}}}) {
+    clientMutationId
+    cart {
+      total
+    }
+  }
+}
+    `
+  };
+}
 
-
-
-
-
-
-// mutation addToCart {
-//   addCartItems(input: {items: {productId: 87}}) {
-//     cart {
-//       total
-//       subtotal
-//     }
-//   }
-// }
-
-
-// export function getDataCart(productId:any, quantity:any) {
-//   return {
-//     query: `
-//       mutation AddToCart {
-//         addToCart(input: {productId: ${productId}, quantity: ${quantity}}) {
-//           cart {
-//             contents {
-//               itemCount
-//               nodes {
-//                 key
-//                 quantity
-//                 total
-//               }
-//             }
-//             total
-//           }
-//         }
-//       }
-//     `
-//   };
-// }
-
-
-
-// export const fetchData = async (query: any, variables: any): Promise<any> => {
-//   const res = await fetch("http://localhost/wordpress-headless/wp-app/graphql", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     // credentials: "include",
-//     body: JSON.stringify({
-//       query,
-//       variables,
-//     }),
-//   });
-
-//   return res.json();
-// };
-
-// export async function getData(payload: { query: string }) {
-
-  
-//   const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
-//     method: 'POST',
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-// // mode:"cors",
-//     body: JSON.stringify({payload}),
-//     credentials: 'include'
-//   });
-
-//   return await response.json();
-// }
 
 export async function getData(payload: { query: string }) {
-  const response = await fetch("https://woo-ecommerse.vercel.app/api/graphql", {
+  const response:any = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ payload }),
-    credentials: 'include',
+    body: JSON.stringify(payload),
+    credentials: 'include', 
   });
 
   return await response.json();
 }
-
-
-// function (params:type) {
-  
-// }
-
-// export async function getData(payload: { query: any }) {
-//   let sessionToken = typeof window !== "undefined" ? localStorage.getItem("wc_session") : null;
-//   const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       ...(sessionToken && { "woocommerce-session": `Session ${sessionToken}` }),
-//     },
-
-//     body: JSON.stringify(payload),
-//   });
-
-//   const newSession = response.headers.get("woocommerce-session");
-//   if (newSession && newSession !== sessionToken) {
-//     localStorage.setItem("wc_session", newSession);
-//     sessionToken = newSession;
-//   }
-
-//   return await response.json();
-// }
 
 

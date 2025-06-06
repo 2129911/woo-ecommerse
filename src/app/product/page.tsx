@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getData  } from "../../lib/route";
 import { addToCart } from "../../lib/route";
 import { getGraphQl } from "../../lib/route";
-import Image from "next/image";
+// import Image from "next/image";
 type Product = {
   id: string;
   name: string;
@@ -16,8 +16,6 @@ type Product = {
   };
 };
 
-// import { cartItem } from "../api/graphQl/route";
-
 export default function HomePage() {
   const [data, setData] = useState<Product[]>([]);
 
@@ -26,6 +24,8 @@ export default function HomePage() {
       const query = getGraphQl();
       const result = await getData(query);
       const products = result?.data?.products?.nodes || [];
+      
+      console.log(products,"console-IN-function")
       setData(products);
     } catch (err) {
       console.log("error", err);
@@ -43,7 +43,7 @@ const addData = async (product:Product) => {
   const postId = id.split(":")[1];
 
   const productId = postId;
-  const quantity = 1;
+  const quantity = 0;
 
   try {
     const mutation = addToCart(productId, quantity);
@@ -72,7 +72,7 @@ const addData = async (product:Product) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {data.map((product: Product) => (
           <div key={product.id}  className="bg-white p-4 shadow rounded">
-            <Image
+            <img
               src={product.image?.sourceUrl}
               alt={product.image?.altText}
               className="w-full h-48 object-cover mb-2"
@@ -81,7 +81,7 @@ const addData = async (product:Product) => {
             <p className="text-sm text-gray-600">
               {product?.description?.replace(/(<([^>]+)>)/gi, "").slice(0, 200)}...
             </p>
-            <p>{product.id}</p>
+            {/* <p>{product.id}</p> */}
             <button
               onClick={() => addData(product)}
               className="m-auto my-3 text-center ml-24 cursor-pointer p-2 bg-blue-400 hover:bg-blue-600 text-white rounded-2xl w-1/2 border"
