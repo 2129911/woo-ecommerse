@@ -136,7 +136,7 @@ export function quanitityUpdate(key: any, quantity: any) {
 export async function getData(payload: { query: string }) {
   console.log("Sending query:", payload);
   
-  const response = await fetch("https://20c7-38-183-9-122.ngrok-free.app/wordpress-headless/wp-app/graphql1", {
+  const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
