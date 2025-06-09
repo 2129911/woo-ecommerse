@@ -135,9 +135,8 @@ export function quanitityUpdate(key: any, quantity: any) {
 
 export async function getData(payload: { query: string }) {
   console.log("Sending query:", payload);
-  const apiUrl:any = process.env.NEXT_PUBLIC_WORDPRESS_API;
   
-  const response = await fetch(apiUrl, {
+  const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
