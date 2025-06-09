@@ -119,17 +119,33 @@ export function quanitityUpdate(key: any, quantity: any) {
 }
 
 
+// export async function getData(payload: { query: string }) {
+//   const response:any = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
+//     method: 'POST',
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(payload),
+//     credentials: 'include', 
+//   });
+
+//   return await response.json();
+// }
+
+
 export async function getData(payload: { query: string }) {
-  const response:any = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
+  console.log("Sending query:", payload);
+  
+  const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
-    credentials: 'include', 
+    credentials:"include",
+    body: JSON.stringify(payload)
   });
 
-  return await response.json();
+  const data = await response.json();
+  console.log("Response received:", data);
+  return data;
 }
-
-
