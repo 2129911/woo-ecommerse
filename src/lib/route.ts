@@ -133,16 +133,37 @@ export function quanitityUpdate(key: any, quantity: any) {
 // }
 
 
-export async function getData(payload: { query: string }) {
-  console.log("Sending query:", payload);
+// export async function getData(payload: { query: string }) {
+//   const NEXT_PUBLIC_WORDPRESS_API = process.env.NEXT_PUBLIC_WORDPRESS_API
+//   console.log("Sending query:", payload);
   
-  const response = await fetch("http://localhost/wordpress-headless/wp-app/graphql1", {
+//   const response = await fetch(`https://${NEXT_PUBLIC_WORDPRESS_API}.ngrok-free.app//wordpress-headless/wp-app/graphql1`, {
+//     method: 'POST',
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     credentials:"include",
+//     body: JSON.stringify(payload)
+//   });
+
+//   const data = await response.json();
+//   console.log("Response received:", data);
+//   return data;
+// }
+
+export async function getData(payload: { query: string }) {
+  const NEXT_PUBLIC_WORDPRESS_API = process.env.NEXT_PUBLIC_WORDPRESS_API;
+  console.log("Sending query:", payload);
+
+  const url = `https://${NEXT_PUBLIC_WORDPRESS_API}.ngrok-free.app/wordpress-headless/wp-app/graphql1`;
+  
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
-    credentials:"include",
-    body: JSON.stringify(payload)
+    credentials: "include",
+    body: JSON.stringify(payload),
   });
 
   const data = await response.json();
