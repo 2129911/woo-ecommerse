@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { getData  } from "../../lib/route";
 import { addToCart } from "../../lib/route";
-import { getGraphQl } from "../../lib/route";
+import { getGraphQl,getCart } from "../../lib/route";
 // import Image from "next/image";
 type Product = {
   id: string;
@@ -32,27 +32,25 @@ export default function HomePage() {
     }
   };
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
+
  
 
-const addData = async (product:Product) => {
-  const rawId =  product?.id
+const addData = async (product: Product) => {
+  const rawId = product?.id;
   const id = atob(rawId);
   const postId = id.split(":")[1];
 
   const productId = postId;
-  const quantity = 0;
+  const quantity = 1;
 
   try {
     const mutation = addToCart(productId, quantity);
-
-    const result = await getData(mutation);
+    const result = await getData(mutation); 
     console.log("Add to cart result:", result);
 
-    const cart = await getData(mutation);
-    console.log("Updated cart:", cart);
+    // const cartQuery = getCart(); 
+    // const cart = await getData(cartQuery);
+    // console.log("Updated cart:", cart);
 
     const cartItems = result?.data?.addToCart?.cartItem?.product?.node;
     console.log("Cart updated:", cartItems);
@@ -63,6 +61,10 @@ const addData = async (product:Product) => {
   }
 };
 
+  useEffect(() => {
+    loadProducts();
+    // addData
+  }, []);
 
 
 
