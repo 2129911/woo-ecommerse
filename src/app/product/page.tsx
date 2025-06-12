@@ -106,7 +106,7 @@ import { getSession, storeSession } from "../getcart/session";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
-  const endpoint: any = "https://wordpress-1347810-5596954.cloudwaysapps.com/graphql1";
+  const endpoint: any = "https://woo-ecommerse.vercel.app/graphql1";
   const [products, setProducts] = useState([]);
 // --------------------fetch-data---------------------------
   const fetchProducts = async () => {
