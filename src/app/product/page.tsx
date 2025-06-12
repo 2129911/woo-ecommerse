@@ -106,7 +106,7 @@ import { getSession, storeSession } from "../getcart/session";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
-  const endpoint: any = process.env.NEXT_PUBLIC_END_POINT;
+  const endpoint: any = "https://woo-ecommerse.vercel.app/graphql1";
   const [products, setProducts] = useState([]);
 // --------------------fetch-data---------------------------
   const fetchProducts = async () => {
