@@ -108,7 +108,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function Page() {
   const endpoint: any = "https://wordpress-1347810-5596954.cloudwaysapps.com/graphql1";
   const [products, setProducts] = useState([]);
-// --------------------fetch-data---------------------------
+  // --------------------fetch-data---------------------------
   const fetchProducts = async () => {
     try {
       const res = await requestWooGraphQL(GET_PRODUCTS_QUERY);
@@ -123,9 +123,9 @@ export default function Page() {
   useEffect(() => {
     fetchProducts();
   }, []);
-// ---------------------fetch-end--------------------------------
+  // ---------------------fetch-end--------------------------------
 
-// ---------------------add to cart--------------------------------
+  // ---------------------add to cart--------------------------------
 
   const addToCart = async (product: any) => {
     const storedSession = getSession();
@@ -134,9 +134,7 @@ export default function Page() {
     const id = atob(rawId);
     const postId = id.split(":")[1];
 
-    // const productId = postId;
-
-    const productId = parseInt(postId); 
+    const productId = parseInt(postId);
 
     const variables = {
       input: {
@@ -153,7 +151,7 @@ export default function Page() {
     if (storedSession) {
       headers["woocommerce-session"] = `Session ${storedSession}`;
     }
-
+    console.log("Stored Session:", storedSession);
     axios
       .post(
         endpoint,
@@ -161,9 +159,10 @@ export default function Page() {
           query: ADD_TO_CART,
           variables: variables,
         },
-        { headers }
+        headers
       )
       .then((res) => {
+        console.log(res, "result check")
         const newSession = res?.headers?.["woocommerce-session"];
 
         if (!storedSession && newSession) {

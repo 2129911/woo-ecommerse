@@ -2,16 +2,16 @@
 import { useEffect, useState } from "react";
 import { GET_CART, UPDATE_CART_ITEM, REMOVE_ITEM_FROM_CART } from "../../lib/route";
 import axios from "axios";
-import { getSession } from "../getcart/session";  
+import { getSession } from "../getcart/session";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [callgetCart, setcallgetCart] = useState(false);
 
   const endpoint = "https://wordpress-1347810-5596954.cloudwaysapps.com/graphql1";
-// ---------------------fetch-cart---------------------------------
+  // ---------------------fetch-cart---------------------------------
   const fetchCartData = async () => {
-    const storedSession = getSession();   
+    const storedSession = getSession();
     if (!storedSession) {
       console.log("No session found");
       return;
@@ -21,10 +21,13 @@ export default function CartPage() {
       "content-type": "application/json",
       "woocommerce-session": `Session ${storedSession}`,
     };
-
+    console.log(storedSession, "stored session")
+    console.log(headers, "header")
     const graphqlQuery = {
       query: GET_CART,
     };
+
+    console.log(graphqlQuery, "graphql data")
 
     try {
       const res = await axios({
@@ -35,7 +38,7 @@ export default function CartPage() {
       });
 
       const getCart = res?.data?.data?.cart;
-      const items = getCart?.contents?.nodes.map((item:any) => ({
+      const items = getCart?.contents?.nodes.map((item: any) => ({
         databaseId: item.product?.node?.databaseId,
         orderQty: item.quantity,
         key: item.key,
@@ -53,7 +56,7 @@ export default function CartPage() {
   // ---------------------fetch-cart-end--------------------------------
 
   // ---------------------update the cart--------------------------------
-  const updateQuantity = async (key:any, quantity:any) => {
+  const updateQuantity = async (key: any, quantity: any) => {
     const storedSession = getSession();
     if (!storedSession) {
       console.log("No session found");
@@ -88,7 +91,7 @@ export default function CartPage() {
       });
 
       console.log("Quantity updated:", res.data);
-      setcallgetCart(prev => !prev);  
+      setcallgetCart(prev => !prev);
     } catch (err) {
       console.error("Error updating quantity:", err);
     }
@@ -97,7 +100,7 @@ export default function CartPage() {
 
   // ---------------------delete------------------------------------
 
-  const deleteItem = async (key:any) => {
+  const deleteItem = async (key: any) => {
     const storedSession = getSession();
     if (!storedSession) {
       console.log("No session found");
@@ -127,7 +130,7 @@ export default function CartPage() {
       });
 
       console.log("Item deleted:", res.data);
-      setcallgetCart(prev => !prev);  
+      setcallgetCart(prev => !prev);
     } catch (err) {
       console.error("Error deleting item:", err);
     }
@@ -144,14 +147,14 @@ export default function CartPage() {
       {cartItems.length === 0 ? (
         <p className="text-center">No items in cart</p>
       ) : (
-        cartItems.map((item:any, index) => (
+        cartItems.map((item: any, index) => (
           <div key={index} className="bg-white items-center shadow-lg flex m-5 p-4 rounded-2xl">
             <img src={item.image} alt={item.name} className="w-1/5 rounded-2xl h-48 mb-2" />
             <div className="ml-5">
               <h2 className="text-3xl font-semibold">{item.name}</h2>
 
               <div className="flex items-center my-3">
-                <button 
+                <button
                   onClick={() => updateQuantity(item.key, item.orderQty - 1)}
                   className="bg-red-500 text-white px-3 py-1 rounded-xl text-2xl mr-3"
                   disabled={item.orderQty <= 1}
@@ -159,7 +162,7 @@ export default function CartPage() {
                   -
                 </button>
                 <span className="text-2xl">{item.orderQty}</span>
-                <button 
+                <button
                   onClick={() => updateQuantity(item.key, item.orderQty + 1)}
                   className="bg-green-500 text-white px-3 py-1 rounded-xl text-2xl ml-3"
                 >
@@ -169,7 +172,7 @@ export default function CartPage() {
 
               <p className="text-2xl font-semibold">Total: {item.total}</p>
 
-              <button 
+              <button
                 onClick={() => deleteItem(item.key)}
                 className="bg-red-600 text-white px-4 py-2 rounded-lg mt-3"
               >
