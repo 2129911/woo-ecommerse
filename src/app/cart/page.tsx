@@ -8,7 +8,7 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [callgetCart, setcallgetCart] = useState(false);
 
-  const endpoint:any = "https://wordpress-1347810-5596954.cloudwaysapps.com/graphql1";
+  const endpoint: any = process.env.NEXT_PUBLIC_END_POINT;
 // ---------------------fetch-cart---------------------------------
   const fetchCartData = async () => {
     const storedSession = getSession();   
