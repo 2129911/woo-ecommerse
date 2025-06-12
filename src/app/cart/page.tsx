@@ -8,7 +8,7 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [callgetCart, setcallgetCart] = useState(false);
 
-  const endpoint = "https://woo-ecommerse.vercel.app/graphql1";
+  const endpoint = process.env.NEXT_PUBLIC_END_POINT;
 // ---------------------fetch-cart---------------------------------
   const fetchCartData = async () => {
     const storedSession = getSession();   
