@@ -14,26 +14,6 @@ export const GET_PRODUCTS_QUERY = `
   }
 `;
 
-export const GET_CART =`
-query getCart {
-  cart {
-    contents {
-      nodes {
-        key
-        quantity
-        product {
-          node {
-            id
-            name
-            price
-          }
-        }
-      }
-    }
-  }
-}
-
-`;
 export const UPDATE_CART = `
 mutation UPDATE_CART($input: UpdateCartInput!) {
   updateCart(input: $input) {
@@ -69,6 +49,104 @@ mutation ADD_TO_CART($input: AddToCartInput!) {
 }`;
 
 
+export const GET_CART =`
+  query GET_CART {
+    cart {
+      contents {
+        nodes {
+          key
+          product {
+            node {
+              id
+              productId: databaseId
+              name
+              description
+              type
+              onSale
+              slug
+              averageRating
+              reviewCount
+              ... on SimpleProduct {
+                id
+                name
+                salePrice
+                productCategories {
+                  edges {
+                    node {
+                      id
+                      name
+                      slug
+                    }
+                  }
+                }
+              }
+              image {
+                id
+                sourceUrl
+                srcSet
+                altText
+                title
+              }
+              galleryImages {
+                nodes {
+                  id
+                  sourceUrl
+                  srcSet
+                  altText
+                  title
+                }
+              }
+            }
+          }
+          variation {
+            node {
+              id
+              variationId: databaseId
+              name
+              description
+              type
+              onSale
+              price
+              regularPrice
+              salePrice
+              image {
+                id
+                sourceUrl
+                srcSet
+                altText
+                title
+              }
+            }
+            attributes {
+              id
+              name
+              value
+            }
+          }
+          quantity
+          total
+          subtotal
+          subtotalTax
+        }
+      }
+      appliedCoupons {
+        code
+        discountAmount
+        discountTax
+      }
+      subtotal
+      subtotalTax
+      shippingTax
+      shippingTotal
+      total
+      totalTax
+      feeTax
+      feeTotal
+      discountTax
+      discountTotal
+    }
+  }
+`;
 
 
 
