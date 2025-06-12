@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const endpoint = process.env.NEXT_PUBLIC_END_POINT;
+const endpoint = "https://wordpress-1347810-5596954.cloudwaysapps.com/graphql1";
 
 export const requestWooGraphQL = async (query,variables) => {
   const headers = {
