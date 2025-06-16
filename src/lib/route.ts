@@ -1,6 +1,6 @@
 export const GET_PRODUCTS_QUERY = `
   query GET_PRODUCTS {
-    products(first: 10) {
+    products(first: 100) {
       nodes {
         id
         name
@@ -148,6 +148,36 @@ export const GET_CART =`
   }
 `;
 
+const CHECKOUT_MUTATION =`
+  mutation CHECKOUT_MUTATION($input: CheckoutInput!) {
+    checkout(input: $input) {
+      order {
+        id
+        orderKey
+        orderNumber
+        status
+        metaData{
+          id
+          key
+          value
+        }
+        refunds {
+          nodes {
+            amount
+            metaData {
+              id
+              key
+              value
+            }
+          }
+        }
+      }
+      result
+      redirect
+      
+    }
+  }
+`;
 
 
 export const UPDATE_CART_ITEM = `
